@@ -1,1342 +1,1342 @@
 <!DOCTYPE html>
 <html lang="en" class="dark">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" href="https://www.svgrepo.com/show/88703/api.svg">
-  <title>API Dashboard</title>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <meta property="og:image" content="">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <title>API - Dashboard</title>
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap"
+    rel="stylesheet" />
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#f5f3ff',
+              100: '#ede9fe',
+              200: '#ddd6fe',
+              300: '#c4b5fd',
+              400: '#a78bfa',
+              500: '#8b5cf6',
+              600: '#7c3aed',
+              700: '#6d28d9',
+              800: '#5b21b6',
+              900: '#4c1d95',
+              950: '#2e1065',
+            },
+            dark: {
+              950: '#09090b',
+              900: '#101014',
+              850: '#141418',
+              800: '#18181c',
+              700: '#1f1f23',
+              600: '#27272b',
+              500: '#2e2e32',
+              400: '#39393d',
+            },
+            accent: {
+              purple: '#9333ea',
+              pink: '#ec4899',
+              blue: '#3b82f6',
+              teal: '#14b8a6',
+            },
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            heading: ['Poppins', 'sans-serif'],
+          },
+          animation: {
+            'gradient-x': 'gradient-x 3s ease infinite',
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'float': 'float 6s ease-in-out infinite',
+          },
+          keyframes: {
+            'gradient-x': {
+              '0%, 100%': {
+                'background-size': '200% 200%',
+                'background-position': 'left center'
+              },
+              '50%': {
+                'background-size': '200% 200%',
+                'background-position': 'right center'
+              },
+            },
+            'float': {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-10px)' },
+            },
+          },
+          boxShadow: {
+            'glow': '0 0 15px rgba(139, 92, 246, 0.5)',
+            'glow-sm': '0 0 5px rgba(139, 92, 246, 0.3)',
+          },
+        },
+      },
+    };
+  </script>
   <style>
-    :root {
-      --bg-base:        #070b0f;
-      --bg-surface:     #0d1117;
-      --bg-elevated:    #131920;
-      --bg-card:        #161d26;
-      --bg-hover:       #1c2630;
-      --border:         rgba(32, 196, 180, 0.12);
-      --border-active:  rgba(32, 196, 180, 0.45);
-      --accent:         #20c4b4;
-      --accent-glow:    rgba(32, 196, 180, 0.25);
-      --accent-2:       #6ee7b7;
-      --accent-hot:     #f472b6;
-      --text-primary:   #e8f4f2;
-      --text-secondary: #7a9e9b;
-      --text-muted:     #4a6966;
-      --radius:         10px;
-      --radius-lg:      16px;
-      --font-display:   'Syne', sans-serif;
-      --font-mono:      'Space Mono', monospace;
-      --font-body:      'DM Sans', sans-serif;
+    /* Custom scrollbar for Webkit browsers */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
     }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg-base);
-      color: var(--text-primary);
-      font-family: var(--font-body);
-      min-height: 100vh;
-      overflow-x: hidden;
+    ::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 3px;
     }
 
-    /* ─── Noise texture overlay ─── */
-    body::before {
+    ::-webkit-scrollbar-thumb {
+      background: rgba(139, 92, 246, 0.2);
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(139, 92, 246, 0.5);
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    .fadeIn {
+      animation: fadeIn 0.5s ease forwards;
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .slideUp {
+      animation: slideUp 0.4s ease forwards;
+    }
+
+    /* Sidebar animations */
+    @keyframes slideInLeft {
+      from {
+        transform: translateX(-100%);
+      }
+
+      to {
+        transform: translateX(0);
+      }
+    }
+
+    .slideInLeft {
+      animation: slideInLeft 0.3s ease forwards;
+    }
+
+    @keyframes slideOutLeft {
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(-100%);
+      }
+    }
+
+    .slideOutLeft {
+      animation: slideOutLeft 0.3s ease forwards;
+    }
+
+    /* Category animations */
+    .category-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .category-content.open {
+      max-height: 60vh;
+      overflow-y: auto;
+    }
+
+    .category-content.open::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+
+    .category-content.open::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 3px;
+    }
+
+    .category-content.open::-webkit-scrollbar-thumb {
+      background: rgba(139, 92, 246, 0.2);
+      border-radius: 3px;
+    }
+
+    .category-content.open::-webkit-scrollbar-thumb:hover {
+      background: rgba(139, 92, 246, 0.5);
+    }
+
+    .category-arrow {
+      transition: transform 0.3s ease;
+    }
+
+    .category-arrow.open {
+      transform: rotate(90deg);
+    }
+
+    /* Unified separator styles */
+    .unified-separator {
+      height: 1px;
+      background: linear-gradient(90deg, rgba(139, 92, 246, 0.1), rgba(139, 92, 246, 0.3), rgba(139, 92, 246, 0.1));
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -1px;
+      transition: opacity 0.3s ease;
+    }
+
+    @media (min-width: 1024px) {
+      .unified-separator {
+        left: 320px;
+      }
+    }
+
+    /* Search animations */
+    #sidebarSearchContainer {
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    /* Search input focus styles */
+    #sidebarSearch:focus {
+      box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.3);
+    }
+
+    /* Card hover effects */
+    .card-hover {
+      transition: all 0.3s ease;
+      border: 1px solid rgba(139, 92, 246, 0.1);
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .card-hover::before {
       content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(147, 51, 234, 0.05) 0%, rgba(236, 72, 153, 0.05) 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: -1;
+    }
+
+    .card-hover:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+      border-color: rgba(139, 92, 246, 0.5);
+    }
+
+    .card-hover:hover::before {
+      opacity: 1;
+    }
+
+    /* Gradient text */
+    .gradient-text {
+      background: linear-gradient(to right, #a78bfa, #ec4899);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    /* Hide navbar header title initially */
+    #header {
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    /* Hide online badge on the header initially */
+    #versionHeader {
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    /* Gradient borders */
+    .gradient-border {
+      position: relative;
+      border-radius: 0.75rem;
+      background-clip: padding-box;
       z-index: 0;
     }
 
-    /* ─── Scrollbar ─── */
-    ::-webkit-scrollbar { width: 5px; height: 5px; }
-    ::-webkit-scrollbar-track { background: var(--bg-surface); }
-    ::-webkit-scrollbar-thumb { background: var(--border-active); border-radius: 99px; }
-    ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+    .gradient-border::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      right: -1px;
+      bottom: -1px;
+      left: -1px;
+      z-index: -1;
+      border-radius: inherit;
+      background: linear-gradient(135deg, #9333ea, #ec4899);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
 
-    /* ─── Loading Screen ─── */
-    #loadingScreen {
-      position: fixed; inset: 0;
-      background: var(--bg-base);
-      z-index: 9999;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 20px;
-      transition: opacity 0.6s ease;
+    .gradient-border:hover::before {
+      opacity: 1;
     }
-    .loading-logo {
-      font-family: var(--font-display);
-      font-size: 1.5rem;
-      font-weight: 800;
-      color: var(--accent);
-      letter-spacing: 4px;
-      text-transform: uppercase;
+
+    /* Gradient background */
+    .gradient-bg {
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(0, 0, 0, 0) 100%);
     }
-    .loading-track {
-      width: 220px; height: 2px;
-      background: var(--bg-elevated);
-      border-radius: 99px;
+
+    /* Animated background */
+    .animated-bg {
+      background: linear-gradient(270deg, #18181c, #27272b);
+      background-size: 200% 200%;
+      animation: gradient-x 3s ease infinite;
+    }
+
+    /* Glass effect */
+    .glass-effect {
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background: rgba(24, 24, 28, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* Button styles */
+    .gradient-button {
+      background: linear-gradient(to right, #9333ea, #ec4899);
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 1;
+    }
+
+    .gradient-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to right, #7c3aed, #db2777);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      border-radius: inherit;
+      z-index: -1;
+    }
+
+    .gradient-button:hover::before {
+      opacity: 1;
+    }
+
+    /* Pulse effect for badges */
+    .pulse-badge {
+      position: relative;
+    }
+
+    .pulse-badge::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+      box-shadow: 0 0 0 0 rgba(147, 51, 234, 0.7);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(147, 51, 234, 0.7);
+      }
+
+      70% {
+        box-shadow: 0 0 0 10px rgba(147, 51, 234, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(147, 51, 234, 0);
+      }
+    }
+
+    /* Method badge styles */
+    .method-badge {
+      position: relative;
       overflow: hidden;
     }
+
+    .method-badge::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+      transition: left 0.5s ease;
+    }
+
+    .method-badge:hover::before {
+      left: 100%;
+    }
+
     #loadingBar {
-      height: 100%; width: 0%;
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
-      border-radius: 99px;
-      transition: width 0.05s linear;
-      box-shadow: 0 0 12px var(--accent-glow);
-    }
-    .loading-text {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      letter-spacing: 2px;
+      animation: shimmer 2s linear infinite;
+      background-size: 200% 100%;
     }
 
-    /* ─── Grid Background ─── */
-    .grid-bg {
-      position: fixed; inset: 0; pointer-events: none; z-index: 0;
-      background-image:
-        linear-gradient(rgba(32,196,180,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(32,196,180,0.04) 1px, transparent 1px);
-      background-size: 40px 40px;
-    }
+    @keyframes shimmer {
+      0% {
+        background-position: 100% 0;
+      }
 
-    /* ─── Sidebar ─── */
-    #sidebarOverlay {
-      position: fixed; inset: 0;
-      background: rgba(0,0,0,0.7);
-      backdrop-filter: blur(4px);
-      z-index: 40; display: none;
+      100% {
+        background-position: -100% 0;
+      }
     }
-    #sidebar {
-      position: fixed; top: 0; left: 0;
-      height: 100%; width: 288px;
-      background: var(--bg-surface);
-      border-right: 1px solid var(--border);
-      z-index: 50;
-      transform: translateX(-100%);
-      transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
-      display: flex; flex-direction: column;
-      box-shadow: 4px 0 40px rgba(0,0,0,0.5);
-    }
-    @media (min-width: 1024px) {
-      #sidebar { transform: translateX(0); }
-    }
-
-    /* Sidebar header */
-    .sidebar-head {
-      height: 64px; padding: 0 20px;
-      display: flex; align-items: center; justify-content: space-between;
-      border-bottom: 1px solid var(--border);
-      position: relative; flex-shrink: 0;
-    }
-    .sidebar-brand {
-      display: flex; align-items: center; gap: 10px; text-decoration: none;
-    }
-    .sidebar-logo-icon {
-      width: 32px; height: 32px; border-radius: 8px;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
-    .sidebar-logo-icon svg { width: 18px; height: 18px; color: var(--bg-base); }
-    #sidebarHeader {
-      font-family: var(--font-display);
-      font-size: 1rem; font-weight: 700;
-      color: var(--text-primary);
-      letter-spacing: 0.5px;
-    }
-    #sidebarVersion {
-      font-family: var(--font-mono);
-      font-size: 0.6rem;
-      color: var(--accent);
-      background: rgba(32,196,180,0.1);
-      border: 1px solid rgba(32,196,180,0.2);
-      padding: 2px 7px; border-radius: 99px;
-    }
-    .icon-btn {
-      width: 34px; height: 34px; border-radius: 8px;
-      background: transparent; border: 1px solid transparent;
-      color: var(--text-secondary); cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      transition: all 0.2s ease;
-      flex-shrink: 0;
-    }
-    .icon-btn:hover {
-      background: var(--bg-hover);
-      border-color: var(--border);
-      color: var(--accent);
-    }
-
-    /* Search container */
-    #sidebarSearchContainer {
-      position: absolute; inset: 0;
-      background: var(--bg-surface);
-      display: none; align-items: center;
-      padding: 0 12px; gap: 8px;
-      z-index: 2;
-    }
-    #sidebarSearchContainer.visible { display: flex; }
-    .search-wrap {
-      flex: 1; position: relative;
-    }
-    .search-wrap svg {
-      position: absolute; left: 10px; top: 50%;
-      transform: translateY(-50%);
-      width: 16px; height: 16px;
-      color: var(--text-muted); pointer-events: none;
-    }
-    #sidebarSearch {
-      width: 100%; height: 36px;
-      padding: 0 34px 0 34px;
-      background: var(--bg-elevated);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      color: var(--text-primary);
-      font-family: var(--font-body);
-      font-size: 0.85rem;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-    #sidebarSearch:focus { border-color: var(--accent); }
-    #sidebarSearch::placeholder { color: var(--text-muted); }
-    #sidebarSearchClear {
-      position: absolute; right: 8px; top: 50%;
-      transform: translateY(-50%);
-      background: none; border: none; cursor: pointer;
-      color: var(--text-muted); display: none;
-      padding: 2px;
-    }
-    #sidebarSearchClear:hover { color: var(--text-primary); }
-    #sidebarSearchCancel {
-      font-family: var(--font-body);
-      font-size: 0.8rem; font-weight: 500;
-      color: var(--accent); background: none;
-      border: none; cursor: pointer;
-      white-space: nowrap;
-    }
-
-    /* Categories */
-    #sidebarCategories {
-      flex: 1; overflow-y: auto;
-      padding: 12px 12px 24px;
-    }
-    .cat-wrap { margin-bottom: 4px; }
-    .cat-header {
-      width: 100%; display: flex;
-      align-items: center; justify-content: space-between;
-      padding: 8px 10px; border-radius: var(--radius);
-      background: transparent; border: none; cursor: pointer;
-      color: var(--text-secondary);
-      transition: all 0.2s ease; text-align: left;
-    }
-    .cat-header:hover {
-      background: var(--bg-elevated);
-      color: var(--text-primary);
-    }
-    .cat-header.active { color: var(--accent); }
-    .cat-header-left { display: flex; align-items: center; gap: 8px; }
-    .cat-icon {
-      width: 24px; height: 24px; border-radius: 6px;
-      background: var(--bg-elevated);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.65rem; flex-shrink: 0;
-      border: 1px solid var(--border);
-      transition: all 0.2s;
-    }
-    .cat-header.active .cat-icon,
-    .cat-header:hover .cat-icon {
-      background: rgba(32,196,180,0.1);
-      border-color: rgba(32,196,180,0.3);
-    }
-    .cat-name {
-      font-family: var(--font-display);
-      font-size: 0.82rem; font-weight: 600;
-      letter-spacing: 0.3px;
-    }
-    .cat-count {
-      font-family: var(--font-mono);
-      font-size: 0.65rem; color: var(--text-muted);
-    }
-    .cat-arrow {
-      width: 14px; height: 14px; flex-shrink: 0;
-      transition: transform 0.25s ease;
-      color: var(--text-muted);
-    }
-    .cat-arrow.open { transform: rotate(90deg); }
-
-    .cat-content {
-      max-height: 0; overflow: hidden;
-      transition: max-height 0.3s ease;
-    }
-    .cat-content.open { max-height: 9999px; }
-
-    .api-item {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 8px 10px; margin: 2px 0;
-      border-radius: var(--radius); cursor: pointer;
-      border: 1px solid transparent;
-      transition: all 0.2s ease;
-    }
-    .api-item:hover {
-      background: var(--bg-elevated);
-      border-color: var(--border);
-    }
-    .api-item:hover .api-item-name { color: var(--accent); }
-    .api-item-name {
-      font-size: 0.82rem; color: var(--text-secondary);
-      transition: color 0.2s; white-space: nowrap;
-      overflow: hidden; text-overflow: ellipsis;
-      max-width: 160px;
-    }
-    .method-badge {
-      font-family: var(--font-mono);
-      font-size: 0.6rem; font-weight: 700;
-      padding: 2px 7px; border-radius: 5px;
-      text-transform: uppercase; letter-spacing: 0.5px;
-      flex-shrink: 0;
-    }
-    .method-get    { background: rgba(16,185,129,0.12); color: #34d399; border: 1px solid rgba(16,185,129,0.25); }
-    .method-post   { background: rgba(59,130,246,0.12); color: #60a5fa; border: 1px solid rgba(59,130,246,0.25); }
-    .method-put    { background: rgba(245,158,11,0.12); color: #fbbf24; border: 1px solid rgba(245,158,11,0.25); }
-    .method-delete { background: rgba(239,68,68,0.12);  color: #f87171; border: 1px solid rgba(239,68,68,0.25); }
-    .method-patch  { background: rgba(139,92,246,0.12); color: #a78bfa; border: 1px solid rgba(139,92,246,0.25); }
-
-    /* ─── Navbar ─── */
-    #navbar {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 30;
-      height: 64px; transition: all 0.3s ease;
-    }
-    #navbar.scrolled {
-      background: rgba(13,17,23,0.85);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
-    }
-    .navbar-inner {
-      height: 100%; padding: 0 24px;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .navbar-left { display: flex; align-items: center; gap: 12px; }
-    #header {
-      font-family: var(--font-display);
-      font-size: 1rem; font-weight: 700;
-      color: var(--text-primary);
-      opacity: 0; transition: opacity 0.3s;
-    }
-    #versionHeader {
-      font-family: var(--font-mono);
-      font-size: 0.6rem; color: var(--accent);
-      background: rgba(32,196,180,0.1);
-      border: 1px solid rgba(32,196,180,0.2);
-      padding: 2px 8px; border-radius: 99px;
-      opacity: 0; transition: opacity 0.3s;
-    }
-    .navbar-right { display: flex; align-items: center; gap: 8px; }
-    #notifBtn {
-      position: relative;
-    }
-    #notificationBadge {
-      position: absolute; top: -4px; right: -4px;
-      width: 18px; height: 18px; border-radius: 99px;
-      background: var(--accent-hot);
-      font-size: 0.6rem; font-weight: 700;
-      display: none; align-items: center; justify-content: center;
-      color: white; font-family: var(--font-mono);
-    }
-
-    /* ─── Main ─── */
-    main {
-      margin-left: 0;
-      transition: margin-left 0.3s ease;
-      position: relative; z-index: 1;
-    }
-    @media (min-width: 1024px) { main { margin-left: 288px; } }
-    .main-pad { padding: 88px 32px 48px; }
-    @media (max-width: 640px) { .main-pad { padding: 80px 16px 40px; } }
-
-    /* ─── Hero Section ─── */
-    .hero {
-      display: flex; flex-direction: column;
-      align-items: center; text-align: center;
-      margin-bottom: 56px; gap: 28px;
-    }
-    .hero-img-wrap {
-      position: relative;
-    }
-    .hero-img-wrap::before {
-      content: '';
-      position: absolute; inset: -12px;
-      border-radius: 24px;
-      background: radial-gradient(ellipse at center, rgba(32,196,180,0.15), transparent 70%);
-      pointer-events: none;
-    }
-    #dynamicImage {
-      border-radius: 18px;
-      max-width: min(380px, 90vw);
-      border: 1px solid var(--border);
-      display: block;
-    }
-    .hero-text { max-width: 560px; }
-    .hero-badge-row {
-      display: flex; align-items: center;
-      justify-content: center; gap: 10px; margin-bottom: 14px;
-    }
-    #name {
-      font-family: var(--font-display);
-      font-size: clamp(1.8rem, 4vw, 2.6rem);
-      font-weight: 800;
-      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 60%, #a7f3d0 100%);
-      -webkit-background-clip: text; background-clip: text;
-      -webkit-text-fill-color: transparent;
-      letter-spacing: -0.5px;
-    }
-    #version {
-      font-family: var(--font-mono);
-      font-size: 0.65rem; color: var(--accent);
-      background: rgba(32,196,180,0.1);
-      border: 1px solid rgba(32,196,180,0.25);
-      padding: 3px 10px; border-radius: 99px;
-    }
-    #description {
-      font-size: 0.95rem; color: var(--text-secondary);
-      line-height: 1.6; margin-bottom: 18px;
-    }
-    .status-pill {
-      display: inline-flex; align-items: center; gap: 7px;
-      font-family: var(--font-mono);
-      font-size: 0.7rem; color: #34d399;
-      background: rgba(16,185,129,0.1);
-      border: 1px solid rgba(16,185,129,0.25);
-      padding: 5px 14px; border-radius: 99px;
-      margin-bottom: 22px;
-    }
-    .status-dot {
-      width: 6px; height: 6px; border-radius: 99px;
-      background: #34d399;
-      box-shadow: 0 0 8px #34d399;
-      animation: statusPulse 2s ease infinite;
-    }
-    @keyframes statusPulse {
-      0%,100% { opacity:1; transform:scale(1); }
-      50% { opacity:0.5; transform:scale(0.8); }
-    }
-    #apiLinks { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
-    .api-link-btn {
-      font-family: var(--font-body);
-      font-size: 0.82rem; font-weight: 500;
-      padding: 8px 18px; border-radius: var(--radius);
-      background: var(--bg-elevated);
-      border: 1px solid var(--border);
-      color: var(--text-secondary);
-      text-decoration: none;
-      transition: all 0.25s ease;
-    }
-    .api-link-btn:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-      background: rgba(32,196,180,0.07);
-      transform: translateY(-2px);
-    }
-
-    /* ─── Stats Grid ─── */
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 16px; margin-bottom: 48px;
-    }
-    .stat-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 22px 24px;
-      display: flex; flex-direction: column; gap: 16px;
-      transition: all 0.25s ease;
-      position: relative; overflow: hidden;
-    }
-    .stat-card::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(90deg, transparent, var(--accent-glow), transparent);
-      opacity: 0; transition: opacity 0.3s;
-    }
-    .stat-card:hover {
-      border-color: var(--border-active);
-      transform: translateY(-3px);
-      box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 0 1px var(--border-active);
-    }
-    .stat-card:hover::before { opacity: 1; }
-    .stat-top {
-      display: flex; align-items: flex-start; justify-content: space-between;
-    }
-    .stat-label {
-      font-family: var(--font-display);
-      font-size: 0.75rem; font-weight: 600;
-      color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px;
-    }
-    .stat-icon {
-      width: 36px; height: 36px; border-radius: 9px;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
-    .stat-icon svg { width: 18px; height: 18px; }
-    .icon-cyan   { background: rgba(32,196,180,0.12); color: var(--accent); border: 1px solid rgba(32,196,180,0.2); }
-    .icon-green  { background: rgba(16,185,129,0.12); color: #34d399; border: 1px solid rgba(16,185,129,0.2); }
-    .icon-amber  { background: rgba(245,158,11,0.12); color: #fbbf24; border: 1px solid rgba(245,158,11,0.2); }
-    .icon-pink   { background: rgba(244,114,182,0.12); color: #f472b6; border: 1px solid rgba(244,114,182,0.2); }
-    .stat-bottom {}
-    .stat-value {
-      font-family: var(--font-display);
-      font-size: 2rem; font-weight: 800;
-      color: var(--text-primary); line-height: 1;
-      margin-bottom: 4px;
-    }
-    .stat-sub {
-      font-size: 0.78rem; color: var(--text-muted);
-    }
-    .stat-datetime {
-      font-family: var(--font-mono);
-      font-size: 0.72rem; color: var(--text-secondary);
-      line-height: 1.6;
-    }
-
-    /* ─── Modal ─── */
-    #apiResponseModal {
-      position: fixed; inset: 0; z-index: 100;
-      background: rgba(0,0,0,0.75);
-      backdrop-filter: blur(8px);
-      display: none; align-items: center; justify-content: center;
-      padding: 16px;
-      overflow-y: auto;
-    }
-    #apiResponseModal.open { display: flex; }
-    .modal-box {
-      background: var(--bg-surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      width: 100%; max-width: 800px;
-      max-height: 90vh; display: flex; flex-direction: column;
-      box-shadow: 0 40px 80px rgba(0,0,0,0.6);
-      animation: modalIn 0.25s cubic-bezier(0.34,1.56,0.64,1);
-    }
-    @keyframes modalIn {
-      from { opacity:0; transform:scale(0.95) translateY(10px); }
-      to   { opacity:1; transform:scale(1) translateY(0); }
-    }
-    .modal-header {
-      padding: 20px 24px;
-      border-bottom: 1px solid var(--border);
-      display: flex; align-items: flex-start; justify-content: space-between;
-      gap: 12px; flex-shrink: 0;
-    }
-    .modal-title-wrap {}
-    #apiResponseModalLabel {
-      font-family: var(--font-display);
-      font-size: 1.1rem; font-weight: 700;
-      color: var(--text-primary); margin-bottom: 4px;
-    }
-    #apiResponseModalDesc {
-      font-size: 0.82rem; color: var(--text-secondary);
-    }
-    .modal-body {
-      padding: 20px 24px;
-      overflow-y: auto; flex: 1; position: relative;
-    }
-    .code-block {
-      position: relative;
-      background: var(--bg-base);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 14px 16px;
-      margin-bottom: 16px;
-    }
-    .code-block pre {
-      font-family: var(--font-mono);
-      font-size: 0.78rem; color: var(--text-secondary);
-      overflow-x: auto; white-space: pre-wrap; word-break: break-all;
-    }
-    .code-label {
-      font-family: var(--font-mono);
-      font-size: 0.6rem; color: var(--text-muted);
-      text-transform: uppercase; letter-spacing: 1px;
-      margin-bottom: 8px;
-    }
-    .copy-btn {
-      position: absolute; top: 10px; right: 10px;
-      background: var(--bg-elevated);
-      border: 1px solid var(--border);
-      border-radius: 7px;
-      padding: 5px 9px;
-      color: var(--text-muted); cursor: pointer;
-      font-size: 0.7rem;
-      display: flex; align-items: center; gap: 5px;
-      transition: all 0.2s; font-family: var(--font-mono);
-    }
-    .copy-btn:hover { color: var(--accent); border-color: var(--accent); }
-    .copy-btn.copied { color: #34d399; border-color: #34d399; }
-
-    /* Param inputs */
-    .param-group { display: flex; flex-direction: column; gap: 6px; }
-    .param-label {
-      font-family: var(--font-display);
-      font-size: 0.78rem; font-weight: 600;
-      color: var(--text-secondary);
-      text-transform: capitalize;
-    }
-    .param-input {
-      background: var(--bg-elevated);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 10px 14px;
-      color: var(--text-primary);
-      font-family: var(--font-body);
-      font-size: 0.85rem; outline: none;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    .param-input:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(32,196,180,0.1);
-    }
-    .param-input::placeholder { color: var(--text-muted); }
-
-    .spinner {
-      display: none; justify-content: center;
-      padding: 40px 0;
-    }
-    .spinner-ring {
-      width: 40px; height: 40px; border-radius: 99px;
-      border: 3px solid var(--bg-elevated);
-      border-top-color: var(--accent);
-      animation: spin 0.8s linear infinite;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* Response colors */
-    .json-key    { color: #67e8f9; }
-    .json-str    { color: #86efac; }
-    .json-num    { color: #fbbf24; }
-    .json-bool   { color: #a78bfa; }
-    .json-null   { color: #f87171; }
-
-    .modal-footer {
-      padding: 16px 24px;
-      border-top: 1px solid var(--border);
-      flex-shrink: 0;
-    }
-    .submit-btn {
-      font-family: var(--font-display);
-      font-size: 0.85rem; font-weight: 700;
-      padding: 10px 28px; border-radius: var(--radius);
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      color: var(--bg-base); border: none; cursor: pointer;
-      transition: all 0.25s ease;
-      letter-spacing: 0.3px;
-      display: none;
-    }
-    .submit-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 8px 24px rgba(32,196,180,0.35);
-    }
-    .submit-btn:disabled {
-      opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none;
-    }
-
-    /* ─── Notification ─── */
-    #notificationPopup {
-      position: fixed; top: 72px; right: 16px; z-index: 60;
-      width: 300px;
-      background: var(--bg-surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      box-shadow: 0 24px 48px rgba(0,0,0,0.5);
-      display: none;
-      backdrop-filter: blur(12px);
-    }
-    #notificationPopup.open { display: block; }
-    .notif-head {
-      padding: 14px 16px;
-      border-bottom: 1px solid var(--border);
-      font-family: var(--font-display);
-      font-size: 0.85rem; font-weight: 700;
-    }
-    #notificationList {
-      max-height: 280px; overflow-y: auto;
-      padding: 8px;
-    }
-    .notif-item {
-      padding: 10px 12px; border-radius: var(--radius);
-      cursor: pointer; display: flex; gap: 10px;
-      align-items: flex-start;
-      transition: background 0.2s;
-      border: 1px solid transparent;
-    }
-    .notif-item:hover { background: var(--bg-hover); }
-    .notif-dot {
-      width: 7px; height: 7px; border-radius: 99px;
-      margin-top: 5px; flex-shrink: 0;
-      transition: all 0.2s;
-    }
-    .notif-dot.unread { background: var(--accent); box-shadow: 0 0 8px var(--accent-glow); }
-    .notif-dot.read   { background: var(--text-muted); }
-    .notif-title { font-size: 0.82rem; font-weight: 600; color: var(--text-primary); margin-bottom: 2px; }
-    .notif-msg   { font-size: 0.75rem; color: var(--text-secondary); line-height: 1.4; }
-    .notif-empty { padding: 20px; text-align: center; color: var(--text-muted); font-size: 0.82rem; }
-
-    /* ─── Animations ─── */
-    @keyframes fadeUp {
-      from { opacity:0; transform:translateY(16px); }
-      to   { opacity:1; transform:translateY(0); }
-    }
-    .fade-up { opacity:0; animation: fadeUp 0.5s ease forwards; }
-    .d1 { animation-delay: 0.1s; }
-    .d2 { animation-delay: 0.2s; }
-    .d3 { animation-delay: 0.3s; }
-    .d4 { animation-delay: 0.4s; }
   </style>
 </head>
-<body>
 
-<!-- Grid BG -->
-<div class="grid-bg"></div>
-
-<!-- Loading Screen -->
-<div id="loadingScreen">
-  <div class="loading-logo">API DASHBOARD</div>
-  <div class="loading-track">
-    <div id="loadingBar"></div>
-  </div>
-  <div class="loading-text">INITIALIZING SYSTEM...</div>
-</div>
-
-<!-- Sidebar Overlay -->
-<div id="sidebarOverlay"></div>
-
-<!-- Sidebar -->
-<aside id="sidebar">
-  <div class="sidebar-head">
-    <a href="#" class="sidebar-brand">
-      <div class="sidebar-logo-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-        </svg>
+<body
+  class="bg-gradient-to-br from-dark-950 via-dark-900 to-dark-850 text-gray-200 font-sans min-h-screen relative transition-colors duration-300">
+  <!-- Loading Screen -->
+  <div id="loadingScreen"
+    class="fixed inset-0 bg-dark-950 z-50 flex flex-col items-center justify-center transition-colors duration-300">
+    <div class="relative w-64 h-2 bg-dark-700 rounded-full overflow-hidden mb-4">
+      <div id="loadingBar"
+        class="absolute left-0 top-0 h-full w-0 bg-gradient-to-r from-primary-600 to-accent-pink rounded-full transition-all duration-1000 ease-out">
       </div>
-      <span id="sidebarHeader"></span>
-      <span id="sidebarVersion"></span>
-    </a>
-    <button class="icon-btn" id="sidebarSearchToggle" title="Search (Ctrl+K)">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-      </svg>
-    </button>
-    <!-- Search overlay -->
-    <div id="sidebarSearchContainer">
-      <div class="search-wrap">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-        </svg>
-        <input type="text" id="sidebarSearch" placeholder="Search APIs...">
-        <button id="sidebarSearchClear">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-            <path d="M6 18L18 6M6 6l12 12"/>
+    </div>
+    <p class="text-primary-400 text-xl font-medium font-heading">Loading dashboard...</p>
+  </div>
+
+  <!-- Sidebar Overlay -->
+  <div id="sidebarOverlay" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-40 hidden lg:hidden"></div>
+
+  <!-- Sidebar -->
+  <aside id="sidebar"
+    class="fixed top-0 left-0 h-full w-80 bg-dark-800/95 backdrop-blur-md border-r border-dark-600/50 z-50 transform -translate-x-full lg:translate-x-0 transition-all duration-300 shadow-xl">
+    <div class="flex flex-col h-full">
+      <!-- Sidebar Header -->
+      <div class="h-16 flex items-center justify-between px-6 relative">
+        <a href="#" class="flex items-center">
+          <span id="sidebarHeader" class="text-xl font-semibold gradient-text font-heading"></span>
+          <div id="sidebarVersion" class="ml-2 bg-primary-900/50 text-primary-300 px-2 py-0.5 text-xs rounded-full">
+          </div>
+        </a>
+        <!-- Sidebar search toggle -->
+        <button id="sidebarSearchToggle" class="p-2 rounded-full hover:bg-dark-600 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
         </button>
-      </div>
-      <button id="sidebarSearchCancel">Cancel</button>
-    </div>
-  </div>
-  <div id="sidebarCategories"></div>
-</aside>
-
-<!-- Navbar -->
-<nav id="navbar">
-  <div class="navbar-inner">
-    <div class="navbar-left">
-      <button class="icon-btn" id="sidebarToggle" style="display:none">
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-          <path d="M4 6h16M4 12h16M4 18h16"/>
-        </svg>
-      </button>
-      <span id="header"></span>
-      <span id="versionHeader"></span>
-    </div>
-    <div class="navbar-right">
-      <button class="icon-btn" id="notifBtn">
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
-        </svg>
-        <span id="notificationBadge"></span>
-      </button>
-    </div>
-  </div>
-</nav>
-
-<!-- Main -->
-<main>
-  <div class="main-pad">
-
-    <!-- Hero -->
-    <div class="hero fade-up d1">
-      <div class="hero-img-wrap">
-        <img id="dynamicImage" src="" alt="Dashboard banner" onerror="this.style.display='none'">
-      </div>
-      <div class="hero-text">
-        <div class="hero-badge-row">
-          <h1 id="name"></h1>
-          <span id="version"></span>
+        <div id="sidebarSearchContainer"
+          class="absolute inset-x-0 top-0 h-16 bg-dark-800 flex items-center px-4 hidden">
+          <div class="relative w-full flex items-center">
+            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
+            <input type="text" id="sidebarSearch" class="w-full h-10 pl-10 pr-10 py-2 bg-dark-600 border-0 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-primary-500 focus:outline-none transition-all" placeholder="Search APIs...">
+            <button id="sidebarSearchClear" class="absolute right-2 p-2 rounded-full text-gray-400 hover:text-gray-200 hidden">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+          <button id="sidebarSearchCancel" class="ml-4 text-white font-medium">Cancel</button>
         </div>
-        <p id="description"></p>
-        <div class="status-pill">
-          <span class="status-dot"></span>
-          <span id="headerStatusText"></span>
-        </div>
-        <div id="apiLinks"></div>
+        <div class="unified-separator"></div>
+      </div>
+      <!-- Sidebar Categories -->
+      <div id="sidebarCategories" class="flex-1 overflow-y-auto px-4 mt-4 pb-6"></div>
+    </div>
+  </aside>
+
+  <!-- Navbar -->
+  <nav id="navbar" class="fixed top-0 inset-x-0 z-30 transition-all duration-300">
+    <div class="container mx-auto px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center">
+        <button id="sidebarToggle" class="p-2 mr-4 rounded-full hover:bg-dark-700 transition-colors lg:hidden">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+        <a href="#" class="flex items-center" id="navbarBrand">
+          <span id="header" class="text-xl font-semibold mr-2 gradient-text font-heading"></span>
+          <div id="versionHeader" class="bg-primary-900/50 text-primary-300 px-3 py-1 text-xs rounded-full"></div>
+        </a>
+      </div>
+      <div class="flex items-center">
+        <button id="notificationToggle" class="p-2 rounded-full hover:bg-dark-700 transition-colors relative">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+          </svg>
+          <span id="notificationBadge" class="absolute top-0 right-0 bg-gradient-to-r from-accent-purple to-accent-pink text-white text-xs rounded-full h-5 w-5 flex items-center justify-center hidden pulse-badge">0</span>
+        </button>
       </div>
     </div>
+    <div id="navbarSeparator" class="unified-separator opacity-0"></div>
+  </nav>
 
-    <!-- Stats -->
-    <div class="stats-grid">
-      <!-- DateTime -->
-      <div class="stat-card fade-up d1">
-        <div class="stat-top">
-          <span class="stat-label">Date & Time</span>
-          <div class="stat-icon icon-green">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
-            </svg>
+  <!-- Main Content -->
+  <main class="lg:ml-80 transition-all duration-300">
+    <div class="h-16"></div>
+    <div class="container mx-auto px-6 py-8">
+      <!-- Header Banner -->
+      <div class="flex flex-col items-center mb-12 fadeIn">
+        <div class="w-full flex justify-center mb-6">
+          <img id="dynamicImage" class="rounded-xl max-w-full lg:max-w-md h-auto object-cover shadow-lg ring-1 ring-white/10" src="" alt="Dashboard banner">
+        </div>
+        <div class="flex-1 text-center slideUp" style="animation-delay: 0.5s;">
+          <div class="flex flex-wrap items-center justify-center gap-3 mb-3">
+            <h1 id="name" class="text-3xl font-bold gradient-text font-heading"></h1>
+            <div id="version"
+              class="bg-gradient-to-r from-primary-900/50 to-primary-800/50 text-primary-300 px-3 py-1 text-xs rounded-full border border-primary-700/30">
+            </div>
+          </div>
+          <p id="description" class="text-gray-400 text-base mb-4"></p>
+          <div id="headerStatus" class="text-sm text-green-400 font-medium mb-6 flex items-center justify-center">
+            <span class="inline-block w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></span>
+            <span id="headerStatusText"></span>
+          </div>
+          <div id="apiLinks" class="flex flex-wrap gap-4 justify-center"></div>
+        </div>
+      </div>
+      <!-- Dashboard Stats -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12 slideUp" style="animation-delay: 0.3s;">
+        <!-- Current Date & Time Card -->
+        <div class="bg-dark-700 rounded-xl p-6 shadow-lg card-hover gradient-border">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-medium font-heading">Date & Time</h3>
+            <div class="p-2 bg-green-900/30 rounded-md">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-400" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 6v6l4 2M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20z" />
+              </svg>
+            </div>
+          </div>
+          <div class="flex items-end">
+            <span id="currentDateTime" class="text-gray-400 ml-2 mb-1"></span>
           </div>
         </div>
-        <div class="stat-bottom">
-          <div class="stat-datetime" id="currentDateTime"></div>
-        </div>
-      </div>
-      <!-- Total APIs -->
-      <div class="stat-card fade-up d2">
-        <div class="stat-top">
-          <span class="stat-label">Total APIs</span>
-          <div class="stat-icon icon-cyan">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-            </svg>
+        <!-- Total APIs Card -->
+        <div class="bg-dark-700 rounded-xl p-6 shadow-lg card-hover gradient-border">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-medium font-heading">Total APIs</h3>
+            <div class="p-2 bg-primary-900/30 rounded-md">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary-400" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+              </svg>
+            </div>
+          </div>
+          <div class="flex items-end">
+            <span id="totalApis" class="text-3xl font-bold">0</span>
+            <span class="text-gray-400 ml-2 mb-1">endpoints</span>
           </div>
         </div>
-        <div class="stat-bottom">
-          <div class="stat-value" id="totalApis">0</div>
-          <div class="stat-sub">endpoints</div>
-        </div>
-      </div>
-      <!-- Categories -->
-      <div class="stat-card fade-up d3">
-        <div class="stat-top">
-          <span class="stat-label">Categories</span>
-          <div class="stat-icon icon-amber">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
-            </svg>
+        <!-- Categories Card -->
+        <div class="bg-dark-700 rounded-xl p-6 shadow-lg card-hover gradient-border">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-medium font-heading">Categories</h3>
+            <div class="p-2 bg-amber-900/30 rounded-md">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-amber-400" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+              </svg>
+            </div>
+          </div>
+          <div class="flex items-end">
+            <span id="totalCategories" class="text-3xl font-bold">0</span>
+            <span class="text-gray-400 ml-2 mb-1">groups</span>
           </div>
         </div>
-        <div class="stat-bottom">
-          <div class="stat-value" id="totalCategories">0</div>
-          <div class="stat-sub">groups</div>
-        </div>
-      </div>
-      <!-- Status -->
-      <div class="stat-card fade-up d4">
-        <div class="stat-top">
-          <span class="stat-label">System Status</span>
-          <div class="stat-icon icon-pink">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-            </svg>
+        <!-- GET Endpoints Card
+        <div class="bg-dark-700 rounded-xl p-6 shadow-lg card-hover gradient-border">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-medium font-heading">GET Endpoints</h3>
+            <div class="p-2 bg-green-900/30 rounded-md">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              </svg>
+            </div>
           </div>
+          <div class="flex items-end">
+            <span id="getEndpoints" class="text-3xl font-bold">0</span>
+            <span class="text-gray-400 ml-2 mb-1">endpoints</span>
+          </div>
+        </div> -->
+
+        <!-- POST Endpoints Card 
+        <div class="bg-dark-700 rounded-xl p-6 shadow-lg card-hover gradient-border">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-medium font-heading">POST Endpoints</h3>
+            <div class="p-2 bg-blue-900/30 rounded-md">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+              </svg>
+            </div>
+          </div>
+          <div class="flex items-end">
+            <span id="postEndpoints" class="text-3xl font-bold">0</span>
+            <span class="text-gray-400 ml-2 mb-1">endpoints</span>
+          </div>
+        </div> -->
+
+      </div>
+    </div>
+  </main>
+
+  <!-- API Response Modal -->
+  <div id="apiResponseModal" class="fixed inset-0 z-50 bg-black/70 hidden overflow-y-auto backdrop-blur-sm"
+    aria-labelledby="apiResponseModalLabel" aria-modal="true">
+    <div class="min-h-screen flex items-center justify-center p-4">
+      <div
+        class="bg-dark-800 border border-dark-600/50 rounded-xl w-full max-w-4xl max-h-[90vh] flex flex-col shadow-xl">
+        <!-- Modal Header -->
+        <div
+          class="flex justify-between items-start p-6 border-b border-dark-600/50 bg-gradient-to-r from-dark-800 to-dark-700 rounded-t-xl">
+          <div>
+            <h3 class="text-xl font-semibold gradient-text font-heading" id="apiResponseModalLabel"></h3>
+            <p class="text-gray-400 text-sm mt-1" id="apiResponseModalDesc"></p>
+          </div>
+          <button type="button" id="closeModalBtn" class="text-gray-400 hover:text-gray-200 p-2 rounded-lg hover:bg-dark-600 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+            <span class="sr-only">Close</span>
+          </button>
         </div>
-        <div class="stat-bottom">
-          <div class="stat-value" style="font-size:1.4rem;color:#34d399">Online</div>
-          <div class="stat-sub">All systems operational</div>
+        <!-- Modal Body -->
+        <div class="p-6 overflow-y-auto flex-1 relative">
+          <!-- Copy Endpoint Button -->
+          <button id="copyApiButton" class="absolute top-5 right-4 z-10 hidden text-gray-500 hover:text-blue-600">
+  <i class="fa-solid fa-copy text-lg"></i>
+</button>
+
+          <!-- API Endpoint -->
+          <pre id="apiEndpoint"
+            class="bg-dark-900 rounded-lg p-4 text-gray-300 text-sm overflow-x-auto mb-4 font-mono border border-dark-600/50">
+  </pre>
+          <div id="apiQueryInputContainer" class="space-y-4"></div>
+          <div id="apiResponseLoading" class="hidden py-12 flex justify-center">
+            <div class="relative w-12 h-12">
+              <div
+                class="absolute inset-0 border-4 border-primary-800/50 border-t-primary-400 rounded-full animate-spin">
+              </div>
+            </div>
+          </div>
+
+          <!-- Copy Response Button -->
+          <button id="copyResponseButton" class="absolute bottom-13 right-4 z-10 hidden text-gray-500 hover:text-blue-600">
+  <i class="fa-solid fa-copy text-lg"></i>
+</button>
+
+          <pre id="apiResponseContent"
+            class="hidden bg-dark-900 rounded-lg p-4 text-gray-300 mt-4 text-sm overflow-x-auto font-mono border border-dark-600/50"></pre>
+        </div>
+        <!-- Modal Footer -->
+        <div class="p-6 border-t border-dark-600/50 bg-gradient-to-r from-dark-800 to-dark-700 rounded-b-xl">
+          <button id="submitQueryBtn" class="hidden px-6 py-2.5 gradient-button text-white font-medium rounded-lg transition-all shadow-lg hover:shadow-primary-500/20">
+            Submit
+          </button>
         </div>
       </div>
     </div>
-
   </div>
-</main>
 
-<!-- Modal -->
-<div id="apiResponseModal">
-  <div class="modal-box">
-    <div class="modal-header">
-      <div class="modal-title-wrap">
-        <div id="apiResponseModalLabel"></div>
-        <div id="apiResponseModalDesc"></div>
-      </div>
-      <button class="icon-btn" id="closeModalBtn">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-          <path d="M6 18L18 6M6 6l12 12"/>
-        </svg>
-      </button>
-    </div>
-    <div class="modal-body">
-      <!-- Endpoint block -->
-      <div class="code-block" id="endpointBlock" style="display:none">
-        <div class="code-label">Endpoint</div>
-        <button class="copy-btn" id="copyEndpointBtn"><i class="fa-regular fa-copy"></i> Copy</button>
-        <pre id="apiEndpoint"></pre>
-      </div>
-      <!-- Param inputs -->
-      <div id="apiQueryInputContainer" style="display:flex;flex-direction:column;gap:14px;margin-bottom:16px;"></div>
-      <!-- Spinner -->
-      <div class="spinner" id="apiResponseLoading">
-        <div class="spinner-ring"></div>
-      </div>
-      <!-- Response block -->
-      <div class="code-block" id="responseBlock" style="display:none">
-        <div class="code-label">Response</div>
-        <button class="copy-btn" id="copyResponseBtn"><i class="fa-regular fa-copy"></i> Copy</button>
-        <pre id="apiResponseContent"></pre>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="submit-btn" id="submitQueryBtn">Execute Request</button>
+  <!-- Notification Pop-up -->
+  <div id="notificationPopup"
+    class="fixed top-20 right-4 z-50 w-80 bg-dark-800 border border-dark-600/50 rounded-lg shadow-lg hidden glass-effect">
+    <div class="p-4">
+      <h3 class="text-lg font-semibold mb-2 font-heading">Notifications</h3>
+      <div id="notificationList" class="space-y-2 max-h-[300px] overflow-y-auto"></div>
     </div>
   </div>
-</div>
 
-<!-- Notification popup -->
-<div id="notificationPopup">
-  <div class="notif-head">Notifications</div>
-  <div id="notificationList"></div>
-</div>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+  const endpointEl = document.getElementById("apiEndpoint");
+  const responseEl = document.getElementById("apiResponseContent");
+  const copyEndpointBtn = document.getElementById("copyApiButton");
+  const copyResponseBtn = document.getElementById("copyResponseButton");
+  const loadingEl = document.getElementById("apiResponseLoading");
 
-<script>
-(function() {
-  // ── Loading bar ──
-  const loadingBar = document.getElementById('loadingBar');
-  let w = 0;
-  const iv = setInterval(() => {
-    if (w >= 100) { clearInterval(iv); return; }
-    w += (w < 70 ? 1.5 : 0.4);
-    loadingBar.style.width = Math.min(w, 100) + '%';
-  }, 20);
+  let endpointText = "";
+  let responseText = "";
 
-  function hideLoading() {
-    const el = document.getElementById('loadingScreen');
-    loadingBar.style.width = '100%';
-    setTimeout(() => {
-      el.style.opacity = '0';
-      setTimeout(() => el.remove(), 500);
-    }, 300);
-  }
+  const updateCopyVisibility = () => {
+    endpointText = endpointEl.textContent.trim();
+    responseText = responseEl.textContent.trim();
 
-  // ── DateTime ──
-  function updateClock() {
-    const el = document.getElementById('currentDateTime');
-    if (!el) return;
-    const now = new Date();
-    const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    const pad = n => String(n).padStart(2,'0');
-    el.innerHTML =
-      `${days[now.getDay()]}, ${months[now.getMonth()]} ${now.getDate()} ${now.getFullYear()}<br>` +
-      `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
-  }
-  setInterval(updateClock, 1000);
-  updateClock();
-
-  // ── Helpers ──
-  const cap = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
-  const $ = id => document.getElementById(id);
-  const setText = (id, val) => { const el = $(id); if (el) el.textContent = val; };
-
-  // ── Sidebar toggle ──
-  const sidebar = $('sidebar');
-  const overlay = $('sidebarOverlay');
-  const toggleBtn = $('sidebarToggle');
-
-  function checkMobile() {
-    const isMobile = window.innerWidth < 1024;
-    toggleBtn.style.display = isMobile ? 'flex' : 'none';
-  }
-  checkMobile();
-  window.addEventListener('resize', checkMobile);
-
-  function openSidebar() {
-    sidebar.style.transform = 'translateX(0)';
-    overlay.style.display = 'block';
-    document.body.style.overflow = 'hidden';
-  }
-  function closeSidebar() {
-    sidebar.style.transform = 'translateX(-100%)';
-    overlay.style.display = 'none';
-    document.body.style.overflow = '';
-    closeSearch();
-  }
-  toggleBtn.addEventListener('click', () => {
-    sidebar.style.transform === 'translateX(0)' ? closeSidebar() : openSidebar();
-  });
-  overlay.addEventListener('click', closeSidebar);
-
-  // ── Search ──
-  const searchContainer = $('sidebarSearchContainer');
-  const searchToggle = $('sidebarSearchToggle');
-  const searchInput = $('sidebarSearch');
-  const searchClear = $('sidebarSearchClear');
-  const searchCancel = $('sidebarSearchCancel');
-
-  function openSearch() {
-    searchContainer.classList.add('visible');
-    searchToggle.style.display = 'none';
-    setTimeout(() => searchInput.focus(), 50);
-  }
-  function closeSearch() {
-    searchContainer.classList.remove('visible');
-    searchToggle.style.display = '';
-    searchInput.value = '';
-    searchClear.style.display = 'none';
-    filterApis('');
-  }
-  searchToggle.addEventListener('click', openSearch);
-  searchCancel.addEventListener('click', closeSearch);
-  searchClear.addEventListener('click', () => {
-    searchInput.value = '';
-    searchClear.style.display = 'none';
-    filterApis('');
-    searchInput.focus();
-  });
-  searchInput.addEventListener('input', () => {
-    const q = searchInput.value;
-    searchClear.style.display = q ? 'block' : 'none';
-    filterApis(q.toLowerCase());
-  });
-  document.addEventListener('keydown', e => {
-    if ((e.ctrlKey || e.metaKey) && e.key === 'k') { e.preventDefault(); openSearch(); }
-    if (e.key === 'Escape') closeSearch();
-  });
-
-  function filterApis(q) {
-    const items = document.querySelectorAll('.api-item');
-    const cats = document.querySelectorAll('.cat-wrap');
-    items.forEach(item => {
-      const match = !q || item.dataset.apiName.toLowerCase().includes(q) || item.dataset.apiDesc.toLowerCase().includes(q);
-      item.style.display = match ? '' : 'none';
-    });
-    cats.forEach(cat => {
-      const visible = [...cat.querySelectorAll('.api-item')].filter(i => i.style.display !== 'none');
-      cat.style.display = (!q || visible.length) ? '' : 'none';
-      if (q && visible.length) {
-        cat.querySelector('.cat-content').classList.add('open');
-        cat.querySelector('.cat-arrow').classList.add('open');
-      }
-      const countEl = cat.querySelector('.cat-count');
-      if (countEl) countEl.textContent = `(${visible.length})`;
-    });
-  }
-
-  // ── Navbar scroll ──
-  window.addEventListener('scroll', () => {
-    const nav = $('navbar');
-    const h = $('header'), v = $('versionHeader');
-    if (window.scrollY > 0) {
-      nav.classList.add('scrolled');
-      if(h) h.style.opacity='1';
-      if(v) v.style.opacity='1';
+    if (endpointText) {
+      copyEndpointBtn.classList.remove("hidden");
     } else {
-      nav.classList.remove('scrolled');
-      if(h) h.style.opacity='0';
-      if(v) v.style.opacity='0';
+      copyEndpointBtn.classList.add("hidden");
+    }
+
+    if (responseText) {
+      copyResponseBtn.classList.remove("hidden");
+    } else {
+      copyResponseBtn.classList.add("hidden");
+    }
+  };
+
+  const observerEndpoint = new MutationObserver(updateCopyVisibility);
+  observerEndpoint.observe(endpointEl, {
+    childList: true,
+    characterData: true,
+    subtree: true,
+  });
+
+  const observerResponse = new MutationObserver(updateCopyVisibility);
+  observerResponse.observe(responseEl, {
+    childList: true,
+    characterData: true,
+    subtree: true,
+  });
+
+  copyEndpointBtn.addEventListener("click", () => {
+    if (endpointText) {
+      navigator.clipboard.writeText(endpointText);
     }
   });
 
-  // ── Copy helper ──
-  function setupCopy(btn, getContent) {
-    btn.addEventListener('click', () => {
-      const text = getContent();
-      if (!text) return;
-      navigator.clipboard.writeText(text).then(() => {
-        btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied';
-        btn.classList.add('copied');
+  copyResponseBtn.addEventListener("click", () => {
+    if (responseText) {
+      navigator.clipboard.writeText(responseText);
+    }
+  });
+});
+
+   
+  function updateDateTime() {
+  const now = new Date();
+  const options = {
+    weekday: 'short',
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit'
+  };
+
+  document.getElementById('currentDateTime').textContent = now.toLocaleString('en-US', options);
+}
+
+// Update every second
+setInterval(updateDateTime, 1000);
+
+// Initial call to display immediately
+updateDateTime();
+  // Loading animation
+  function animateLoading() {
+    const loadingBar = document.getElementById('loadingBar');
+    let width = 0;
+    const interval = setInterval(() => {
+      if (width >= 100) {
+        clearInterval(interval);
+      } else {
+        width++;
+        loadingBar.style.width = width + '%';
+      }
+    }, 20);
+  }
+
+  window.addEventListener('load', animateLoading);
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    // Sidebar elements and helpers
+    const loadingScreen = document.getElementById("loadingScreen");
+    const capitalizeFirstLetter = str => str ? str.charAt(0).toUpperCase() + str.slice(1) : str;
+    const sidebar = document.getElementById('sidebar');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+    const sidebarSearchContainer = document.getElementById('sidebarSearchContainer');
+    const sidebarSearchToggle = document.getElementById('sidebarSearchToggle');
+    const sidebarSearch = document.getElementById('sidebarSearch');
+    const sidebarSearchClear = document.getElementById('sidebarSearchClear');
+    const navbar = document.getElementById('navbar');
+    const navbarSeparator = document.getElementById('navbarSeparator');
+
+    // Notification elements
+    const notificationToggle = document.getElementById('notificationToggle');
+    const notificationBadge = document.getElementById('notificationBadge');
+    const notificationPopup = document.getElementById('notificationPopup');
+    const notificationList = document.getElementById('notificationList');
+
+    const sidebarSearchCancel = document.getElementById('sidebarSearchCancel');
+    sidebarSearchCancel.addEventListener('click', () => {
+      toggleSearch();
+      sidebarSearch.value = '';
+      sidebarSearch.dispatchEvent(new Event('input'));
+    });
+
+    function resetSidebar() {
+      sidebarSearchContainer.classList.add('hidden');
+      sidebarSearchToggle.classList.remove('hidden');
+      sidebarSearch.value = '';
+      sidebarSearchClear.classList.add('hidden');
+      sidebarSearch.dispatchEvent(new Event('input'));
+
+      const categoryContents = document.querySelectorAll('.category-content');
+      categoryContents.forEach(content => content.classList.remove('open'));
+      const categoryHeaders = document.querySelectorAll('#sidebarCategories button');
+      categoryHeaders.forEach(header => {
+        const arrow = header.querySelector('.category-arrow');
+        if (arrow) arrow.classList.remove('open');
+        if (header.parentElement) header.parentElement.style.display = '';
+      });
+    }
+
+    const toggleSidebar = () => {
+      const isOpen = !sidebar.classList.contains('-translate-x-full');
+      if (isOpen) {
+        sidebar.classList.add('-translate-x-full');
+        sidebarOverlay.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+        resetSidebar();
+      } else {
+        sidebar.classList.remove('-translate-x-full');
+        sidebarOverlay.classList.remove('hidden');
+        if (window.innerWidth < 1024) document.body.classList.add('overflow-hidden');
+      }
+    };
+
+    sidebarToggle.addEventListener('click', toggleSidebar);
+    sidebarOverlay.addEventListener('click', toggleSidebar);
+
+    const toggleSearch = () => {
+      const isVisible = !sidebarSearchContainer.classList.contains('hidden');
+      if (isVisible) {
+        sidebarSearchContainer.style.opacity = '0';
+        sidebarSearchContainer.style.transform = 'translateY(-10px)';
         setTimeout(() => {
-          btn.innerHTML = '<i class="fa-regular fa-copy"></i> Copy';
-          btn.classList.remove('copied');
-        }, 2000);
+          sidebarSearchContainer.classList.add('hidden');
+          sidebarSearchToggle.classList.remove('hidden');
+          sidebarSearchContainer.style.opacity = '';
+          sidebarSearchContainer.style.transform = '';
+        }, 200);
+      } else {
+        sidebarSearchContainer.classList.remove('hidden');
+        sidebarSearchToggle.classList.add('hidden');
+        sidebarSearchContainer.style.opacity = '0';
+        sidebarSearchContainer.style.transform = 'translateY(-10px)';
+        setTimeout(() => {
+          sidebarSearchContainer.style.opacity = '1';
+          sidebarSearchContainer.style.transform = 'translateY(0)';
+          sidebarSearchContainer.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
+          sidebarSearch.focus();
+        }, 10);
+      }
+    };
+
+    sidebarSearchToggle.addEventListener('click', toggleSearch);
+
+    sidebarSearchClear.addEventListener('click', () => {
+      sidebarSearch.value = '';
+      sidebarSearch.dispatchEvent(new Event('input'));
+      sidebarSearch.focus();
+      sidebarSearchClear.classList.add('hidden');
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        if (sidebarSearchContainer.classList.contains('hidden')) toggleSearch();
+        sidebarSearch.focus();
+      }
+      if (e.key === 'Escape' && !sidebarSearchContainer.classList.contains('hidden')) {
+        toggleSearch();
+        sidebarSearch.value = '';
+        sidebarSearch.dispatchEvent(new Event('input'));
+      }
+    });
+
+    sidebarSearch.addEventListener('input', () => {
+      const searchTerm = sidebarSearch.value.toLowerCase();
+      const apiItems = document.querySelectorAll('.sidebar-api-item');
+      const categoryHeaders = document.querySelectorAll('#sidebarCategories button');
+
+      if (searchTerm.length > 0) {
+        sidebarSearchClear.classList.remove('hidden');
+      } else {
+        sidebarSearchClear.classList.add('hidden');
+      }
+
+      apiItems.forEach(item => {
+        const name = item.dataset.apiName.toLowerCase();
+        const desc = item.dataset.apiDesc.toLowerCase();
+        if (name.includes(searchTerm) || desc.includes(searchTerm)) {
+          item.style.display = '';
+          const categoryContent = item.closest('.category-content');
+          if (categoryContent && !categoryContent.classList.contains('open')) {
+            categoryContent.classList.add('open');
+            const categoryHeader = document.querySelector(`#sidebarCategories [data-target="${categoryContent.id}"]`);
+            if (categoryHeader) {
+              const arrow = categoryHeader.querySelector('.category-arrow');
+              if (arrow) {
+                arrow.classList.add('open');
+              }
+            }
+          }
+        } else {
+          item.style.display = 'none';
+        }
+      });
+      categoryHeaders.forEach(header => {
+        const categoryId = header.dataset.target;
+        const content = document.getElementById(categoryId);
+        const visibleItems = Array.from(content.querySelectorAll('.sidebar-api-item')).filter(item => item.style.display !== 'none');
+        const countEl = header.querySelector('span:last-child');
+        if (countEl) countEl.textContent = `(${visibleItems.length})`;
+        header.parentElement.style.display = visibleItems.length === 0 && searchTerm ? 'none' : '';
       });
     });
-  }
-  setupCopy($('copyEndpointBtn'), () => $('apiEndpoint').textContent.trim());
-  setupCopy($('copyResponseBtn'), () => $('apiResponseContent').textContent.trim());
 
-  // ── Modal ──
-  const modal = $('apiResponseModal');
-  $('closeModalBtn').addEventListener('click', () => modal.classList.remove('open'));
-  modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('open'); });
+    document.addEventListener('click', event => {
+      const apiItem = event.target.closest('.sidebar-api-item');
+      if (apiItem) handleApiClick(apiItem.dataset);
+    });
 
-  function openModal(dataset) {
-    const { apiPath, apiName, apiDesc, apiAuthor, apiMethod } = dataset;
-    const method = (apiMethod || 'get').toLowerCase();
+    function handleApiClick(dataset) {
+      const { apiPath, apiName, apiDesc, apiAuthor, apiMethod } = dataset;
+      const method = apiMethod ? apiMethod.toLowerCase() : 'get';
+      const modal = document.getElementById('apiResponseModal');
+      modal.classList.remove('hidden');
+      const modalRefs = {
+        label: document.getElementById('apiResponseModalLabel'),
+        desc: document.getElementById('apiResponseModalDesc'),
+        content: document.getElementById('apiResponseContent'),
+        endpoint: document.getElementById('apiEndpoint'),
+        spinner: document.getElementById('apiResponseLoading'),
+        queryInputContainer: document.getElementById('apiQueryInputContainer'),
+        submitBtn: document.getElementById('submitQueryBtn')
+      };
+      modalRefs.label.textContent = capitalizeFirstLetter(apiName);
+      const capitalizedAuthor = apiAuthor ? `by ${capitalizeFirstLetter(apiAuthor)}` : ''; 
+      modalRefs.desc.textContent = `${capitalizeFirstLetter(apiDesc)}`; 
+      modalRefs.content.textContent = '';
+      modalRefs.endpoint.textContent = '';
+      modalRefs.spinner.classList.add('hidden');
+      modalRefs.content.classList.add('hidden');
+      modalRefs.endpoint.classList.add('hidden');
+      modalRefs.queryInputContainer.innerHTML = '';
+      modalRefs.submitBtn.classList.add('hidden');
 
-    setText('apiResponseModalLabel', cap(apiName));
-    setText('apiResponseModalDesc', cap(apiDesc));
-    $('apiEndpoint').textContent = '';
-    $('apiResponseContent').innerHTML = '';
-    $('endpointBlock').style.display = 'none';
-    $('responseBlock').style.display = 'none';
-    $('apiResponseLoading').style.display = 'none';
-    $('apiQueryInputContainer').innerHTML = '';
-    $('submitQueryBtn').style.display = 'none';
+      let baseApiUrl = `${window.location.origin}${apiPath.split('?')[0]}`;
+      let paramsString = apiPath.split('?')[1] || '';
+      let params = new URLSearchParams(paramsString);
+      let hasParams = params.toString().length > 0;
 
-    modal.classList.add('open');
-
-    const baseUrl = `${window.location.origin}${apiPath.split('?')[0]}`;
-    const paramsStr = apiPath.split('?')[1] || '';
-    const params = new URLSearchParams(paramsStr);
-    const hasParams = params.toString().length > 0;
-
-    if (hasParams) {
-      const container = $('apiQueryInputContainer');
-      params.forEach((val, key) => {
-        const group = document.createElement('div');
-        group.className = 'param-group';
-        group.innerHTML = `
-          <label class="param-label">${cap(key)}</label>
-          <input class="param-input" type="text" data-param="${key}" placeholder="Enter ${key}...">
-        `;
-        container.appendChild(group);
+      if (hasParams) {
+        const paramContainer = document.createElement('div');
+        paramContainer.className = 'space-y-4';
+        Array.from(params.keys()).forEach(param => {
+          const inputGroup = document.createElement('div');
+          inputGroup.className = 'flex flex-col';
+          const label = document.createElement('label');
+          label.htmlFor = `param-${param}`;
+          label.className = 'text-gray-300 mb-2 font-medium';
+          label.textContent = capitalizeFirstLetter(param);
+          const inputField = document.createElement('input');
+          inputField.type = 'text';
+          inputField.id = `param-${param}`;
+          inputField.className = 'bg-dark-600 border border-dark-500 text-white rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all';
+            inputField.placeholder = `Enter ${param}...`;
+            inputField.dataset.param = param;
+            inputField.required = false; // Make the field not required
+            inputGroup.appendChild(label);
+            inputGroup.appendChild(inputField);
+            paramContainer.appendChild(inputGroup);
+            });
+            modalRefs.queryInputContainer.appendChild(paramContainer);
+          modalRefs.submitBtn.classList.remove('hidden');
+          modalRefs.submitBtn.disabled = false; // Enable the submit button by default
+          modalRefs.submitBtn.onclick = async () => {
+          const inputs = modalRefs.queryInputContainer.querySelectorAll('input');
+          const data = {};
+          inputs.forEach(input => {
+          data[input.dataset.param] = input.value.trim() || params.get(input.dataset.param) || ''; // Use default value if input is empty
       });
-      const btn = $('submitQueryBtn');
-      btn.style.display = 'block';
-      btn.onclick = () => {
-        const data = {};
-        container.querySelectorAll('input').forEach(inp => {
-          data[inp.dataset.param] = inp.value.trim() || params.get(inp.dataset.param) || '';
-        });
-        container.innerHTML = '';
-        btn.style.display = 'none';
+      modalRefs.queryInputContainer.innerHTML = '';
+      modalRefs.submitBtn.classList.add('hidden');
+      if (method === 'get') {
+        const newParams = new URLSearchParams(data);
+        const apiUrlWithParams = `${baseApiUrl}?${newParams.toString()}`;
+        handleApiRequest(apiUrlWithParams, modalRefs, apiName, 'get');
+          } else if (method === 'post') {
+            handleApiRequest(baseApiUrl, modalRefs, apiName, 'post', data);
+          }
+        };
+      } else {
+        handleApiRequest(baseApiUrl, modalRefs, apiName, method);
+      }
+    }
+
+    function validateInputs() {
+      const submitBtn = document.getElementById('submitQueryBtn');
+      const inputs = document.querySelectorAll('#apiQueryInputContainer input');
+      const isValid = Array.from(inputs).every(input => input.value.trim() !== '');
+      submitBtn.disabled = !isValid;
+      if (isValid) {
+        submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+      } else {
+        submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+      }
+    }
+
+    async function handleApiRequest(apiUrl, modalRefs, apiName, method = 'get', bodyData = null) {
+      modalRefs.spinner.classList.remove('hidden');
+      modalRefs.content.classList.add('hidden');
+      try {
+        const options = {};
         if (method === 'post') {
-          execRequest(baseUrl, 'post', null, data);
+          options.method = 'POST';
+          options.headers = { 'Content-Type': 'application/json' };
+          if (bodyData) options.body = JSON.stringify(bodyData);
+        }
+        const response = await fetch(apiUrl, options);
+        const contentType = response.headers.get('Content-Type');
+        if (contentType && contentType.startsWith('image/')) {
+          const blob = await response.blob();
+          const imageUrl = URL.createObjectURL(blob);
+          const img = document.createElement('img');
+          img.src = imageUrl;
+          img.alt = apiName;
+          img.className = 'max-w-full h-auto rounded-lg';
+          modalRefs.content.innerHTML = '';
+          modalRefs.content.appendChild(img);
         } else {
-          execRequest(`${baseUrl}?${new URLSearchParams(data)}`, 'get');
+          const data = await response.json();
+          const formattedJson = JSON.stringify(data, null, 2);
+          modalRefs.content.textContent = formattedJson;
+          modalRefs.content.innerHTML = formattedJson.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+            let cls = 'text-amber-300';
+            if (/^"/.test(match)) {
+              cls = /:$/.test(match) ? 'text-primary-300' : 'text-green-300';
+            } else if (/true|false/.test(match)) {
+              cls = 'text-blue-300';
+            } else if (/null/.test(match)) {
+              cls = 'text-red-300';
+            }
+            return '<span class="' + cls + '">' + match + '</span>';
+          });
+        }
+    
+        modalRefs.endpoint.textContent = apiUrl;
+        modalRefs.endpoint.classList.remove('hidden');
+
+      } finally {
+        modalRefs.spinner.classList.add('hidden');
+        modalRefs.content.classList.remove('hidden');
+      }
+    }
+
+    document.getElementById('closeModalBtn').addEventListener('click', () => {
+      document.getElementById('apiResponseModal').classList.add('hidden');
+    });
+
+    notificationToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      notificationPopup.classList.toggle('hidden');
+      renderNotifications();
+    });
+    notificationPopup.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+    document.addEventListener('click', (e) => {
+      if (!notificationPopup.contains(e.target) && e.target !== notificationToggle) {
+        notificationPopup.classList.add('hidden');
+      }
+    });
+
+    function updateNavbarAppearance() {
+      const headerTitle = document.getElementById('header');
+      const headerBadge = document.getElementById('versionHeader');
+      if (window.scrollY > 0) {
+        navbar.classList.add('bg-dark-800/80', 'backdrop-blur-md', 'shadow-lg');
+        navbarSeparator.classList.remove('opacity-0');
+        headerTitle.style.opacity = '1';
+        headerBadge.style.opacity = '1';
+      } else {
+        navbar.classList.remove('bg-dark-800/80', 'backdrop-blur-md', 'shadow-lg');
+        navbarSeparator.classList.add('opacity-0');
+        headerTitle.style.opacity = '0';
+        headerBadge.style.opacity = '0';
+      }
+    }
+
+    window.addEventListener('scroll', updateNavbarAppearance);
+    updateNavbarAppearance();
+
+    let notifications = [];
+    const STORAGE_KEY = 'dashboard_notifications';
+
+    function loadNotifications() {
+      const savedNotifications = localStorage.getItem(STORAGE_KEY);
+      if (savedNotifications) {
+        try {
+          return JSON.parse(savedNotifications);
+        } catch (e) {
+          console.error('Error parsing saved notifications:', e);
+          return [];
+        }
+      }
+      return [];
+    }
+
+    function saveNotifications() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(notifications));
+    }
+
+    function updateNotificationBadge() {
+      const unreadCount = notifications.filter(n => !n.read).length;
+      if (unreadCount > 0) {
+        notificationBadge.textContent = unreadCount;
+        notificationBadge.classList.remove('hidden');
+      } else {
+        notificationBadge.classList.add('hidden');
+      }
+    }
+
+    function renderNotifications() {
+      notificationList.innerHTML = '';
+      if (notifications.length === 0) {
+        notificationList.innerHTML = '<div class="p-3 text-gray-400 text-center">No notifications</div>';
+        return;
+      }
+      notifications.forEach((notification, index) => {
+        const notificationEl = document.createElement('div');
+        notificationEl.className = `p-3 ${notification.read ? 'bg-dark-700' : 'bg-gradient-to-r from-dark-700 to-dark-600'} rounded-md transition-all hover:bg-dark-600 cursor-pointer`;
+        notificationEl.innerHTML = `
+          <div class="flex items-start">
+            <div class="flex-shrink-0 mr-3">
+              <div class="w-2 h-2 mt-1.5 rounded-full ${notification.read ? 'bg-gray-500' : 'bg-primary-400 animate-pulse'}"></div>
+            </div>
+            <div class="flex-1">
+              <h4 class="font-semibold">${notification.title}</h4>
+              <p class="text-sm text-gray-400">${notification.message}</p>
+            </div>
+          </div>
+        `;
+        notificationEl.addEventListener('click', () => {
+          notifications[index].read = true;
+          saveNotifications();
+          updateNotificationBadge();
+          renderNotifications();
+        });
+        notificationList.appendChild(notificationEl);
+      });
+    }
+
+    try {
+      const settings = await fetch('settings.json').then(res => res.json());
+      const apiInfo = await fetch('info.json').then(res => res.json());
+      const setContent = (id, property, value) => {
+        const element = document.getElementById(id);
+        if (element) {
+          if (property === 'textContent' && (id === 'header' || id === 'sidebarHeader' || id === 'name')) {
+            element.textContent = value;
+            element.classList.add('gradient-text');
+          } else {
+            element[property] = value;
+          }
         }
       };
-    } else {
-      execRequest(baseUrl, method);
-    }
-  }
 
-  async function execRequest(url, method, headers, body) {
-    $('apiResponseLoading').style.display = 'flex';
-    $('endpointBlock').style.display = 'none';
-    $('responseBlock').style.display = 'none';
-
-    try {
-      const opts = {};
-      if (method === 'post') {
-        opts.method = 'POST';
-        opts.headers = { 'Content-Type': 'application/json' };
-        if (body) opts.body = JSON.stringify(body);
+      const dynamicImage = document.getElementById('dynamicImage');
+      if (dynamicImage && settings.header && settings.header.imageSrc) {
+        let imageSrc = settings.header.imageSrc;
+        if (Array.isArray(imageSrc)) {
+          imageSrc = imageSrc[Math.floor(Math.random() * imageSrc.length)];
+        }
+        dynamicImage.src = imageSrc;
+        dynamicImage.alt = settings.name || "Dashboard";
+        const setImageSize = () => {
+          const screenWidth = window.innerWidth;
+          if (screenWidth < 768) {
+            dynamicImage.classList.add('max-w-[80%]');
+            dynamicImage.classList.remove('max-w-sm', 'max-w-md');
+          } else if (screenWidth < 1200) {
+            dynamicImage.classList.add('max-w-sm');
+            dynamicImage.classList.remove('max-w-[80%]', 'max-w-md');
+          } else {
+            dynamicImage.classList.add('max-w-md');
+            dynamicImage.classList.remove('max-w-[80%]', 'max-w-sm');
+          }
+        };
+        setImageSize();
+        window.addEventListener('resize', setImageSize);
       }
-      const res = await fetch(url, opts);
-      const ct = res.headers.get('Content-Type') || '';
 
-      // Show endpoint
-      $('apiEndpoint').textContent = url;
-      $('endpointBlock').style.display = 'block';
+      setContent('page', 'textContent', settings.name || "API Dashboard");
+      setContent('header', 'textContent', settings.name || "API Dashboard");
+      setContent('name', 'textContent', settings.name || "API Dashboard");
+      setContent('version', 'textContent', settings.version || "v1.0 Beta");
+      setContent('versionHeader', 'textContent', settings.header.status || "Online!");
+      setContent('description', 'textContent', settings.description || "Interactive API Explorer");
+      setContent('headerStatusText', 'textContent', settings.header.status || "Online!");
+      setContent('sidebarHeader', 'textContent', settings.name || "API Dashboard");
+      setContent('sidebarVersion', 'textContent', settings.version || "v1.0 Beta");
 
-      if (ct.startsWith('image/')) {
-        const blob = await res.blob();
-        const imgUrl = URL.createObjectURL(blob);
-        const img = document.createElement('img');
-        img.src = imgUrl; img.alt = 'Response';
-        img.style.cssText = 'max-width:100%;border-radius:8px;display:block;';
-        $('apiResponseContent').innerHTML = '';
-        $('apiResponseContent').appendChild(img);
-      } else {
-        const json = await res.json();
-        const raw = JSON.stringify(json, null, 2);
-        $('apiResponseContent').innerHTML = syntaxHighlight(raw);
-      }
-      $('responseBlock').style.display = 'block';
-    } catch (err) {
-      $('apiEndpoint').textContent = url;
-      $('endpointBlock').style.display = 'block';
-      $('apiResponseContent').textContent = `Error: ${err.message}`;
-      $('responseBlock').style.display = 'block';
-    } finally {
-      $('apiResponseLoading').style.display = 'none';
-    }
-  }
-
-  function syntaxHighlight(json) {
-    return json
-      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
-      .replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?)/g, m => {
-        if (/^"/.test(m)) return /:$/.test(m) ? `<span class="json-key">${m}</span>` : `<span class="json-str">${m}</span>`;
-        if (/true|false/.test(m)) return `<span class="json-bool">${m}</span>`;
-        if (/null/.test(m)) return `<span class="json-null">${m}</span>`;
-        return `<span class="json-num">${m}</span>`;
-      });
-  }
-
-  // Delegate api item clicks
-  document.addEventListener('click', e => {
-    const item = e.target.closest('.api-item');
-    if (item) openModal(item.dataset);
-  });
-
-  // ── Notifications ──
-  const notifBtn = $('notifBtn');
-  const notifPopup = $('notificationPopup');
-  const notifList = $('notificationList');
-  const notifBadge = $('notificationBadge');
-  let notifications = [];
-  const NOTIF_KEY = 'api_dash_notifications';
-
-  function loadNotifs() {
-    try { return JSON.parse(localStorage.getItem(NOTIF_KEY)) || []; } catch { return []; }
-  }
-  function saveNotifs() { localStorage.setItem(NOTIF_KEY, JSON.stringify(notifications)); }
-  function updateBadge() {
-    const c = notifications.filter(n=>!n.read).length;
-    notifBadge.textContent = c;
-    notifBadge.style.display = c ? 'flex' : 'none';
-  }
-  function renderNotifs() {
-    notifList.innerHTML = '';
-    if (!notifications.length) {
-      notifList.innerHTML = '<div class="notif-empty">No notifications</div>';
-      return;
-    }
-    notifications.forEach((n, i) => {
-      const el = document.createElement('div');
-      el.className = 'notif-item';
-      el.innerHTML = `
-        <div class="notif-dot ${n.read ? 'read' : 'unread'}"></div>
-        <div>
-          <div class="notif-title">${n.title}</div>
-          <div class="notif-msg">${n.message}</div>
-        </div>
-      `;
-      el.addEventListener('click', () => {
-        notifications[i].read = true;
-        saveNotifs(); updateBadge(); renderNotifs();
-      });
-      notifList.appendChild(el);
-    });
-  }
-
-  notifBtn.addEventListener('click', e => {
-    e.stopPropagation();
-    notifPopup.classList.toggle('open');
-    renderNotifs();
-  });
-  document.addEventListener('click', e => {
-    if (!notifPopup.contains(e.target) && e.target !== notifBtn) {
-      notifPopup.classList.remove('open');
-    }
-  });
-
-  // ── Bootstrap data ──
-  async function init() {
-    try {
-      const [settings, apiInfo] = await Promise.all([
-        fetch('settings.json').then(r=>r.json()),
-        fetch('info.json').then(r=>r.json())
-      ]);
-
-      // Header
-      const name = settings.name || 'API Dashboard';
-      const ver  = settings.version || 'v1.0';
-      setText('header', name); setText('sidebarHeader', name); setText('name', name);
-      setText('version', ver); setText('sidebarVersion', ver);
-      setText('versionHeader', settings.header?.status || 'Online');
-      setText('description', settings.description || 'Interactive API Explorer');
-      setText('headerStatusText', settings.header?.status || 'All systems online');
-
-      // Image
-      const imgEl = $('dynamicImage');
-      let src = settings.header?.imageSrc;
-      if (Array.isArray(src)) src = src[Math.floor(Math.random()*src.length)];
-      if (src) imgEl.src = src; else imgEl.style.display='none';
-
-      // Links
-      const linksEl = $('apiLinks');
-      (settings.links||[]).forEach(({url,name}) => {
-        const a = document.createElement('a');
-        a.href=url; a.textContent=name; a.target='_blank'; a.className='api-link-btn';
-        linksEl.appendChild(a);
-      });
-
-      // Notifications
-      const saved = loadNotifs();
-      const savedMap = new Map(saved.map(n => [n.title+n.message, n]));
-      (settings.notifications||[]).forEach(n => {
-        const key = n.title+n.message;
-        n.read = savedMap.get(key)?.read || false;
-        savedMap.set(key, n);
-      });
-      notifications = [...savedMap.values()];
-      saveNotifs(); updateBadge();
-
-      // Categories
-      const cats = [...apiInfo.categories].sort((a,b)=>a.name.localeCompare(b.name));
-      let totalApis = 0;
-      const container = $('sidebarCategories');
-      const catIcons = ['⚡','🔗','📡','🛡️','🔮','🎯','💡','🌐','🔑','📊'];
-
-      cats.forEach((cat, ci) => {
-        totalApis += cat.items.length;
-        const items = [...cat.items].sort((a,b)=>a.name.localeCompare(b.name));
-        const catId = `cat-${ci}`;
-        const wrap = document.createElement('div');
-        wrap.className = 'cat-wrap';
-        wrap.innerHTML = `
-          <button class="cat-header" data-target="${catId}">
-            <div class="cat-header-left">
-              <div class="cat-icon">${catIcons[ci % catIcons.length]}</div>
-              <span class="cat-name">${cap(cat.name)}</span>
-              <span class="cat-count">(${items.length})</span>
-            </div>
-            <svg class="cat-arrow" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
-            </svg>
-          </button>
-          <div class="cat-content" id="${catId}">
-            ${items.map(item => {
-              const m = item.method.toLowerCase();
-              return `<div class="api-item"
-                data-api-path="${item.path}"
-                data-api-name="${item.name}"
-                data-api-desc="${item.desc||''}"
-                data-api-author="${item.author||''}"
-                data-api-method="${m}">
-                <span class="api-item-name">${cap(item.name)}</span>
-                <span class="method-badge method-${m}">${m}</span>
-              </div>`;
-            }).join('')}
-          </div>
-        `;
-        const btn = wrap.querySelector('.cat-header');
-        btn.addEventListener('click', () => {
-          const content = $(`cat-${ci}`);
-          const arrow = btn.querySelector('.cat-arrow');
-          content.classList.toggle('open');
-          arrow.classList.toggle('open');
-          btn.classList.toggle('active');
+      const apiLinksContainer = document.getElementById('apiLinks');
+      if (apiLinksContainer && settings.links?.length) {
+        settings.links.forEach(({ url, name }) => {
+          const link = document.createElement('a');
+          link.href = url;
+          link.textContent = name;
+          link.target = '_blank';
+          link.className = 'text-primary-400 hover:text-primary-300 transition-colors border border-dark-600 bg-dark-700 rounded-lg px-4 py-2 text-sm font-medium hover:bg-dark-600 hover:border-primary-500/50 hover:shadow-glow-sm';
+          apiLinksContainer.appendChild(link);
         });
-        container.appendChild(wrap);
+      }
+
+      const savedNotifications = loadNotifications();
+      if (settings.notifications && Array.isArray(settings.notifications)) {
+        const notificationMap = new Map();
+        savedNotifications.forEach(n => {
+          notificationMap.set(n.title + n.message, n);
+        });
+        settings.notifications.forEach(n => {
+          const key = n.title + n.message;
+          if (notificationMap.has(key)) {
+            n.read = notificationMap.get(key).read;
+          } else {
+            n.read = false;
+          }
+          notificationMap.set(key, n);
+        });
+        notifications = Array.from(notificationMap.values());
+        saveNotifications();
+        updateNotificationBadge();
+      } else {
+        notifications = savedNotifications;
+        updateNotificationBadge();
+      }
+
+      const sortedCategories = apiInfo.categories.sort((a, b) => a.name.localeCompare(b.name));
+      let totalApis = 0, getEndpoints = 0, postEndpoints = 0;
+      sortedCategories.forEach(category => {
+        totalApis += category.items.length;
+        category.items.forEach(item => {
+          if (item.method.toLowerCase() === 'get') getEndpoints++;
+          if (item.method.toLowerCase() === 'post') postEndpoints++;
+        });
       });
+      setContent('totalApis', 'textContent', totalApis);
+      setContent('totalCategories', 'textContent', sortedCategories.length);
+      setContent('getEndpoints', 'textContent', getEndpoints);
+      setContent('postEndpoints', 'textContent', postEndpoints);
 
-      setText('totalApis', totalApis);
-      setText('totalCategories', cats.length);
-
-    } catch(err) {
-      console.error('Dashboard init error:', err);
+      const sidebarCategories = document.getElementById('sidebarCategories');
+      sortedCategories.forEach((category, categoryIndex) => {
+        const categoryId = `category-${categoryIndex}`;
+        const categoryEl = document.createElement('div');
+        categoryEl.className = 'mb-4';
+        const categoryHeader = document.createElement('button');
+        categoryHeader.className = 'w-full flex items-center justify-between p-2 rounded-md hover:bg-dark-600 transition-colors text-left';
+        categoryHeader.dataset.target = categoryId;
+        const capitalizedCategoryName = capitalizeFirstLetter(category.name);
+        categoryHeader.innerHTML = `
+          <div class="flex items-center">
+            <span class="font-medium">${capitalizedCategoryName}</span>
+            <span class="ml-2 text-xs text-gray-400">(${category.items.length})</span>
+          </div>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 category-arrow" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        `;
+        const categoryContent = document.createElement('div');
+        categoryContent.id = categoryId;
+        categoryContent.className = 'category-content pl-2';
+        const sortedItems = category.items.sort((a, b) => a.name.localeCompare(b.name));
+        sortedItems.forEach(item => {
+          const capitalizedName = capitalizeFirstLetter(item.name);
+          const methodColors = {
+            get: 'bg-green-900/50 text-green-300 border border-green-800/30',
+            post: 'bg-blue-900/50 text-blue-300 border border-blue-800/30',
+            put: 'bg-amber-900/50 text-amber-300 border border-amber-800/30',
+            delete: 'bg-red-900/50 text-red-300 border border-red-800/30',
+            patch: 'bg-purple-900/50 text-purple-300 border border-purple-800/30'
+          };
+          const method = item.method.toLowerCase();
+          const methodColor = methodColors[method] || 'bg-gray-800 text-gray-300 border border-gray-700/30';
+          const itemEl = document.createElement('div');
+          itemEl.className = 'py-2 px-2 my-1 hover:bg-dark-600 rounded-md transition-colors cursor-pointer sidebar-api-item';
+          itemEl.dataset.apiPath = item.path;
+          itemEl.dataset.apiName = item.name;
+          itemEl.dataset.apiDesc = item.desc;
+          itemEl.dataset.apiAuthor = item.author || '';
+          itemEl.dataset.apiMethod = method;
+          itemEl.innerHTML = `
+            <div class="flex items-center justify-between">
+              <span class="text-sm truncate">${capitalizedName}</span>
+              <span class="${methodColor} px-2 py-0.5 text-xs rounded uppercase method-badge">${method}</span>
+            </div>
+          `;
+          categoryContent.appendChild(itemEl);
+        });
+        categoryEl.appendChild(categoryHeader);
+        categoryEl.appendChild(categoryContent);
+        sidebarCategories.appendChild(categoryEl);
+        categoryHeader.addEventListener('click', () => {
+          const arrow = categoryHeader.querySelector('.category-arrow');
+          const content = document.getElementById(categoryId);
+          if (content.classList.contains('open')) {
+            content.classList.remove('open');
+            arrow.classList.remove('open');
+          } else {
+            content.classList.add('open');
+            arrow.classList.add('open');
+          }
+        });
+      });
+    } catch (error) {
+      console.error('Error loading settings or API info:', error);
     } finally {
-      hideLoading();
+      setTimeout(() => {
+        const loadingScreen = document.getElementById("loadingScreen");
+        loadingScreen.style.opacity = '0';
+        loadingScreen.style.transition = 'opacity 0.5s ease';
+        setTimeout(() => { loadingScreen.style.display = 'none'; }, 500);
+      }, 2000);
     }
-  }
-
-  init();
-})();
-</script>
+  });
+  </script>
 </body>
+
 </html>
